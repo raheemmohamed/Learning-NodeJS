@@ -5,6 +5,11 @@ const app = express();
 // specified port for run server
 const PORT = 3000;
 
+const plannets = [
+  { id: 0, name: "plannet 1" },
+  { id: 1, name: "plannet 2" },
+  { id: 2, name: "plannet 3" },
+];
 //way of configure the route in Express.JS
 app.get("/", (req, res) => {
   res.send("Hello Im From Express Route");
@@ -12,6 +17,29 @@ app.get("/", (req, res) => {
 
 app.get("/message", (req, res) => {
   res.send("<h2>Message Route</h2>");
+});
+
+app.get("/plannets", (req, res) => {
+  // one way of return response as a JSON
+  //res.json(plannets);
+
+  // second way of update status and return response as a JSON
+  res.status(200).json(plannets);
+});
+
+// send URL with router parameters in EXPRESS.js
+app.get("/getPlannet/:plannetIndex", (req, res) => {
+  // taking a url param and assign in to local variable
+  const plannetId = req.params.plannetIndex;
+  const plannet = plannets[plannetId];
+
+  if (plannet) {
+    res.status(200).json(plannet);
+  } else {
+    res.status(404).json({
+      error: "Plannet Not found",
+    });
+  }
 });
 
 // Listening Server
