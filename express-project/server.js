@@ -12,11 +12,33 @@ const plannets = [
   { id: 3, name: "plannet 4" },
 ];
 
-// Simple ExpressJS middleware
+// Simple ExpressJS middleware -1
 app.use((req, res, next) => {
-  console.log(`Method ${req.method}, request URL: ${req.url}`);
+  console.log(`I am from 1st Method ${req.method}, request URL: ${req.url}`);
   next();
 });
+
+//simple ExpressJS middleware - 2
+app.use((req, res, next) => {
+  console.log(`I am from 2nd Method ${req.method}, request URL: ${req.url}`);
+  next();
+});
+
+//simple ExpressJS middleware - 3 for check how many millisecond for complete the request
+app.use((req, res, next) => {
+  const start = Date.now();
+
+  next(); //After call Next()
+
+  // here the place where need to do some action
+  const delta = Date.now() - start;
+  console.log(
+    `I am from 3rd Method ${req.method}, request URL: ${req.url}, completion time: ${delta}Ms`
+  );
+});
+
+// ExpressJs middleware for check and parses incoming requests with JSON payloads
+app.use(express.json());
 
 // Way of configure the route in Express.JS - Rout handler
 app.get("/", (req, res) => {
@@ -50,6 +72,18 @@ app.get("/getPlannet/:plannetIndex", (req, res) => {
       error: "Plannet Not found",
     });
   }
+});
+
+// Route for POST method to add data in to plannet collection
+app.post("/plannetCollection", (req, res) => {
+  if (!req.body.name) {
+    return res.status(400).json({ error: "Plannet name is missed" });
+  }
+
+  const newPlannetData = { id: plannets.length, name: req.body.name };
+  plannets.push(newPlannetData);
+
+  res.json(newPlannetData);
 });
 
 // Listening Server
