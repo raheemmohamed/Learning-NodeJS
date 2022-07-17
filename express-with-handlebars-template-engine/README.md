@@ -20,11 +20,10 @@ Go to Express JS API reference => application and API reference and set view eng
 
 ### Application Settings - ExpressJS
 
-| Property                                               | Type            | Description                                                                                                                                    | Default                  |
-| ------------------------------------------------------ | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| views                                                  | String or Array | A directory or an array of directories for the application's views. If an array, the views are looked up in the order they occur in the array. | process.cwd() + '/views' |
-| view engine                                            | String          | The default engine extension to use when omitted.                                                                                              |
-| NOTE: Sub-apps will inherit the value of this setting. | N/A (undefined) |
+| Property    | Type            | Description                                                                                                                                    | Default                                                |
+| ----------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ | --------------- |
+| views       | String or Array | A directory or an array of directories for the application's views. If an array, the views are looked up in the order they occur in the array. | process.cwd() + '/views'                               |
+| view engine | String          | The default engine extension to use when omitted.                                                                                              | NOTE: Sub-apps will inherit the value of this setting. | N/A (undefined) |
 
 Now Go to Your `server.js` and configure your template view engine and where your view files directory located
 
