@@ -46,3 +46,5 @@ app.get("/", (req, res) => {
 ```
 
 > After that instead of `index.html` extension update with hbs extension so the file name should named like this `index.hbs`
+
+> Refer ExpressJS API docs `https://expressjs.com/en/5x/api.html#app.set`
