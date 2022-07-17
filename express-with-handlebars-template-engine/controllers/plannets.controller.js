@@ -1,6 +1,13 @@
 // Import Plannet Models
 const plannetModel = require("../models/plannets.model");
 
+function renderPlannets(req, res) {
+  res.render("plannets", {
+    data: plannetModel,
+    plannetTitle: "All Plannets",
+  });
+}
+
 function getAllPlannets(req, res) {
   // one way of return response as a JSON
   //res.json(plannets);
@@ -40,4 +47,5 @@ module.exports = {
   getAllPlannets,
   getPlannetDetailsById,
   addNewPlannet,
+  renderPlannets,
 };

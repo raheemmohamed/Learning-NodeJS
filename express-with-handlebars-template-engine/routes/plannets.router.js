@@ -18,4 +18,6 @@ plannetRouter.get(
 // Route for POST method to add data in to plannet collection
 plannetRouter.post("/plannetCollection", plannetController.addNewPlannet);
 
+plannetRouter.get("/renderPlannets", plannetController.renderPlannets);
+
 module.exports = plannetRouter;
