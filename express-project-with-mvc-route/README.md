@@ -51,3 +51,35 @@ const carRouter = require("./routes/cars.router");
 app.use("/cars", carRouter);
 
 ```
+
+### Send image using NodeJS Path
+
+Suppose if you want to send the image from the response, the we need to use 'PATH' from NODEJS. below is the implentation
+
+> Using `res.sendFile('here your path of file');`
+
+here is the way use path join
+
+- \_\_dirname: an environment variable that tells you the absolute path of the directory containing the currently executing file lives.
+- ".." : go up one level like this.
+- "public": is the directory where my image contain
+- "nodejs.png": is my image name
+
+```
+const publicPath = path.join(__dirname, "..", "public", "nodejs.png");
+```
+
+Full Coding Snippet below
+
+```
+// import nodeJS inbuild path module for load images public directory
+const path = require("path");
+
+function getMessage(req, res) {
+  const publicPath = path.join(__dirname, "..", "public", "nodejs.png");
+  res.sendFile(publicPath);
+  // res.send("<h2>Message Route</h2>");
+}
+
+module.exports = getMessage;
+```
