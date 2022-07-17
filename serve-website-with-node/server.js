@@ -31,7 +31,7 @@ app.use(express.json());
 /**
  * Load static website pages *path.join(__dirname, "public")
  */
-app.use("/static", express.static(path.join(__dirname, "public")));
+app.use("/site", express.static(path.join(__dirname, "public")));
 
 /**
  * load routes to a middleware function following way that will take care
