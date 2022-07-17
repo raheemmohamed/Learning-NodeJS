@@ -1,4 +1,4 @@
-# Express JS View Engine For HandleBard JS
+# Express JS Handlebar js Template View Engine
 
 A template engine enables you to use static template files in your application. and have a lot of features that makes your pages more dynamic.
 
