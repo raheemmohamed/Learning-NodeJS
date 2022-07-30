@@ -7,7 +7,10 @@ const path = require("path");
 // MORGAN for Log the requests
 const morgan = require("morgan");
 
+//plannet router
 const plannetRouter = require("./routes/planets/planets.router");
+//launches router
+const launchesRouter = require("./routes/launches/launches.router");
 
 const app = express();
 
@@ -26,9 +29,10 @@ app.use(express.json()); // parse body as JSON
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.use(plannetRouter);
+app.use(launchesRouter);
 
 // If root path then load the frontend build index.html
-app.get("/", (req, res) => {
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
 

@@ -26,3 +26,17 @@ in frontend `package.json` script build script is look like following `client` d
 ## For Capture LOGS of requests you can use `moran`
 
 For more details about Morgan refer following link https://www.npmjs.com/package/morgan
+
+## Serving Apps with Client-Side Routing
+
+If you refresh the frontend UI then due to route different router path string `NodeJS` not going to understand so its check if any endpoint name is there then return otherwise its showing `Cannot GET /welcome`
+
+for resolving this you need to add following to expressJS, refer React framework serving routes https://create-react-app.dev/docs/deployment/#serving-apps-with-client-side-routing
+
+```
+-app.get('/', function (req, res) {
++app.get('/*', function (req, res) {
+   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+ });
+
+```
