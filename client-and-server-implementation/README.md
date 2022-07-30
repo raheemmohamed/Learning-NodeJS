@@ -12,3 +12,13 @@ under this i will learn,
 For handle `CORS` we are using following NPM package, https://www.npmjs.com/package/cors
 
 Install Concurrently library for run both `client` and `server` together peralley. https://www.npmjs.com/package/concurrently
+
+## Following steps you can build your frontend and serve those with NodeJS
+
+Root `pacakge.json` following is the snippet for build production frontend code and serve from `NODEJS`
+
+> "deploy": "npm run build --prefix client && npm run start --prefix server"
+
+in frontend `package.json` script build script is look like following `client` directory package.json
+
+> "build": "set BUILD_PATH=../server/public&& react-scripts build",

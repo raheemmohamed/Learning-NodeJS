@@ -10,7 +10,8 @@
     "client-server": "npm start --prefix client",
     "backend-server": "npm run watch --prefix server",
     "watch": "npm run backend-server && npm run client-server",
-    "start": "concurrently \"npm run backend-server\" \"npm run client-server\""
+    "start": "concurrently \"npm run backend-server\" \"npm run client-server\"",
+    "deploy": "npm run build --prefix client && npm run start --prefix server"
   },
   "author": "Raheem",
   "license": "ISC",
