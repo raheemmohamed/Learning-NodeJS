@@ -22,3 +22,7 @@ Root `pacakge.json` following is the snippet for build production frontend code 
 in frontend `package.json` script build script is look like following `client` directory package.json
 
 > "build": "set BUILD_PATH=../server/public&& react-scripts build",
+
+## For Capture LOGS of requests you can use `moran`
+
+For more details about Morgan refer following link https://www.npmjs.com/package/morgan
