@@ -1,0 +1,20 @@
+{
+  "name": "client-and-server",
+  "version": "1.0.0",
+  "description": "In this implmentation, developing server API for frontend project. for frontend we using `React` framework and for server side we using `NodeJS` and `Express JS` for middlware.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run-client": "cd client && npm start",
+    "run-server": "cd server && npm run watch",
+    "client-server": "npm start --prefix client",
+    "backend-server": "npm run watch --prefix server",
+    "watch": "npm run backend-server && npm run client-server",
+    "start": "concurrently \"npm run backend-server\" \"npm run client-server\""
+  },
+  "author": "Raheem",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.3.0"
+  }
+}

@@ -1,5 +1,7 @@
 const http = require("http");
 const app = require("./app");
+
+const { loadPlannetData } = require("./models/planets.model");
 // process.env.PORT setting envrionment variable to run application on different port
 /**
  * and this is how you should set your environment variable
@@ -11,6 +13,13 @@ const PORT = process.env.PORT || 8000;
 
 const server = http.createServer(app);
 
-server.listen(PORT, () => {
-  console.log("Node server is running", PORT);
-});
+async function runTheServer() {
+  // LOAD THE PLANNET DATA BEFORE SERVER GET START
+  await loadPlannetData();
+
+  server.listen(PORT, () => {
+    console.log("Node server is running", PORT);
+  });
+}
+
+runTheServer();

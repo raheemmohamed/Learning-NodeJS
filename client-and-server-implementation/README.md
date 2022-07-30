@@ -10,3 +10,5 @@ under this i will learn,
 > How to use `CORS` package in `ExpressJS`
 
 For handle `CORS` we are using following NPM package, https://www.npmjs.com/package/cors
+
+Install Concurrently library for run both `client` and `server` together peralley. https://www.npmjs.com/package/concurrently
