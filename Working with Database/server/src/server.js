@@ -15,7 +15,7 @@ const { loadPlannetData } = require("./models/planets.model");
 const PORT = process.env.PORT || 8000;
 
 const MONGO_URL =
-  "mongodb+srv://node-api-user:node-api-user@node-api-cluster.94js3yl.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://node-api-user:<password>@node-api-cluster.94js3yl.mongodb.net/?retryWrites=true&w=majority";
 const server = http.createServer(app);
 
 // Check MongoDB atlas connection establish using following
