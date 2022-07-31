@@ -33,6 +33,8 @@ async function runTheServer() {
   await mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    dbName: "node-API",
+    autoIndex: true,
   });
 
   // LOAD THE PLANNET DATA BEFORE SERVER GET START

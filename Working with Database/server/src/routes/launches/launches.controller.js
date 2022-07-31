@@ -1,29 +1,30 @@
 const launchesModel = require("../../models/launches.model");
 
-function getAllLaunches(req, res) {
-  return res.status(200).json(launchesModel.getAllLaunches());
+async function getAllLaunches(req, res) {
+  return res.status(200).json(await launchesModel.getAllLaunches());
 }
 
-function createNewLaunch(req, res) {
+async function createNewLaunch(req, res) {
   const body = req.body;
   console.log("Check my req", req.body);
 
-  launchesModel.addNewlaunches(body);
+  await launchesModel.addNewlaunches(body);
 
   return res.status(201).json(body);
 }
 
-function abortLaunch(req, res) {
+async function abortLaunch(req, res) {
   const launchId = req.params.id;
+  const existsLaunch = await launchesModel.checkExistLaunchById(launchId);
   console.log("Launch Id", launchId);
-  if (!launchesModel.checkExistLaunchById(launchId)) {
+  if (!existsLaunch) {
     return res.status(404).json({
       message: "Launch is Not Exist",
       res: launchId,
     });
   }
 
-  const aborted = launchesModel.abortLaunchById(launchId);
+  const aborted = await launchesModel.abortLaunchById(launchId);
   return res.status(200).json(aborted);
 }
 
