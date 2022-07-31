@@ -40,3 +40,15 @@ for resolving this you need to add following to expressJS, refer React framework
  });
 
 ```
+
+## JEST for API testing
+
+Jest is a delightful JavaScript Testing Framework with a focus on simplicity. do following command and install package, refer more detail about `jest` using this link https://jestjs.io/
+
+> npm install jest --save-dev
+
+along with this we are going to use `SuperTest` for test HTTP request, using this library we can test our HTTP requests, for more details about the library check it out this link https://www.npmjs.com/package/supertest.
+
+Install the dependency using following command
+
+> npm install supertest --save-dev
