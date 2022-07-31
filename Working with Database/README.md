@@ -162,3 +162,7 @@ module.exports = {
 };
 
 ```
+
+Follow mongoDB official documentation for `Query` documents
+
+> https://www.mongodb.com/docs/manual/crud/
