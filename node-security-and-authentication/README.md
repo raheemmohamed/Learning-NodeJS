@@ -101,3 +101,141 @@ const app = express();
 
 app.use(helmet());
 ```
+
+## What is JWT (JSON WEB TOCKEN) ?
+
+JSON web tocken in know `JWT`, it a type of `access token`. access token much like `API keys`. they uniquely identified specific user of the application. more than that they act as a set of credinitials for users. grant access to API.
+
+> more information refer `JWT` official documentation using following link https://jwt.io/
+
+## Google Oauth2
+
+Secure way to implement Sign on is keeping everything on giants servers such as Google OAuth2, for more details refer following below link
+
+> https://developers.google.com/identity/protocols/oauth2
+
+## Passport
+
+`Passport is authentication middleware for Node.js`. Extremely flexible and modular, Passport can be unobtrusively dropped in to any Express-based web application. A comprehensive set of strategies support `authentication` using a `username and password`, `Facebook`, `Twitter`, and more.
+
+> https://www.passportjs.org/
+
+you can see bunch of libraries passport will provide us for implement simple logins. `check it out package for impplement google oauth2`
+
+> https://www.passportjs.org/packages/passport-google-oauth20/
+
+install using following command
+
+> `npm install passport-google-oauth20`
+
+and also you want to install following passport package
+
+> `npm install passport`  
+> `npm install passport-local` // for local username and password implementation from your application side
+
+more details refer following link https://www.passportjs.org/tutorials/password/verify/
+
+## dotenv package for secure our application API key and secret codes
+
+Load environment variable .env file into process.env in nodeJS application. so this will keep our code API and secret key code secure and without exposure to outside.
+
+refer more details using official dotenv documentation `https://www.npmjs.com/package/dotenv`, anyway install this package using following command
+
+> npm install dotenv --save
+
+## Passport Authentication implementation with Google OAuth2
+
+in your server.js code snippet
+
+```javascript
+const express = require("express");
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
+const app = express();
+
+// Google Authentication config
+const config = {
+  GOOGLE_CLIENT_ID: process.env.CLIENT_ID, // this is coming from environment/.env and its google clientID
+  GOOGLE_CLIENT_SECRET: process.env.CLIENT_SECRET, // this is coming from environment/.env and its google CLIENT_SECRET
+};
+
+// Passport auth options
+const AUTH_OPTIONS = {
+  clientID: config.GOOGLE_CLIENT_ID,
+  clientSecret: config.GOOGLE_CLIENT_SECRET,
+  callbackURL: "/auth/google/callback",
+};
+
+function verifyCallBack(accessToken, refreshToken, profile, done) {
+  console.log("profile", profile);
+  // first param for error and second for success
+  done(null, profile);
+}
+
+//passport use google strategy
+passport.use(new GoogleStrategy(AUTH_OPTIONS, verifyCallBack));
+
+// initialize passport middlware
+app.use(passport.initialize());
+
+/**
+ * ===================================================
+ * Google Social Sign on implementation routes :START
+ * ===================================================
+ */
+
+// function will check whether user logged
+function checkedLoggedIn(req, res, next) {
+  const isLogged = true;
+  if (!isLogged) {
+    return res.status(401).json({
+      error: "You must log in!",
+    });
+  }
+  next();
+}
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["email", "profile"],
+  }),
+  (req, res) => {
+    res.send("Google Login Page");
+  }
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/failure",
+    successRedirect: "/",
+    session: false,
+  }),
+  (req, res) => {
+    console.log("Google Called us back");
+  }
+);
+
+app.get("/auth/logout", (req, res) => {});
+
+/**
+ * ===================================================
+ * Google Social Sign on implementation routes :END
+ * ===================================================
+```
+
+please note following is use for auth verification, this should pass in to your router, then when user access this router path then this will automatically check and redirect to google sign in page if user not logged in
+
+```javascript
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["email", "profile"],
+  }),
+  (req, res) => {
+    res.send("Google Login Page");
+  }
+);
+```
