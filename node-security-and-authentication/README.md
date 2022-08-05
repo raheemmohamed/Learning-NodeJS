@@ -275,6 +275,7 @@ install using following command
 For implment session we used `passport js` and `cookie-session`. please note cookie-session is keep session in client and send it to server. then based on cookie `passport` will serializeUser and deserializeUser to set and read the cookie data. anyway for this we have to do some configuration.
 
 > `passport js session configuration`: https://www.passportjs.org/concepts/authentication/sessions/
+
 > `cookie-session` : http://expressjs.com/en/resources/middleware/cookie-session.html
 
 As per the passport we implement using following way with the help of `cookie-session` package. more details refer above mentioned links
