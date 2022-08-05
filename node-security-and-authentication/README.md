@@ -239,3 +239,62 @@ app.get(
   }
 );
 ```
+
+## Session implementation in NodeJS Express
+
+### express-session for server side session
+
+for remember our user is logged in to our server then we need to use another middleware name called `express-session` for more details about this middleware refer this link https://www.npmjs.com/package/express-session
+
+> npm install express-session
+
+along with this we are going to use `cookie-session`
+
+Simple cookie-based session middleware.
+
+## What is Cookie-session ?
+
+Cookie is for client side session
+
+> Refer official Github repo:- https://github.com/expressjs/cookie-session
+
+A user session can be stored in two main ways with cookies: on the server or on the client. This module stores the session data on the client within a cookie, while a module like `express-session` stores only a session identifier on the client within a cookie and stores the session data on the server, typically in a database.
+
+The following points can help you choose which to use:
+
+> `cookie-session` does not require any database / resources on the server side, though the total session data cannot exceed the browser's max cookie size.
+> `cookie-session` can simplify certain load-balanced scenarios.
+> `cookie-session` can be used to store a "light" session and include an identifier to look up a database-backed secondary store to reduce database lookups.
+
+install using following command
+
+> npm install cookie-session
+
+## Session Implementation in this application
+
+For implment session we used `passport js` and `cookie-session`. please note cookie-session is keep session in client and send it to server. then based on cookie `passport` will serializeUser and deserializeUser to set and read the cookie data. anyway for this we have to do some configuration.
+
+> `passport js session configuration`: https://www.passportjs.org/concepts/authentication/sessions/
+> `cookie-session` : http://expressjs.com/en/resources/middleware/cookie-session.html
+
+As per the passport we implement using following way with the help of `cookie-session` package. more details refer above mentioned links
+
+```javascript
+const cookieSession = require("cookie-session");
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
+const app = express();
+
+app.use(passport.session());
+
+passport.serializeUser(function (user, done) {
+  console.log("Check passport serializeUser", user);
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+  console.log("Check passport DeserializeUser", user);
+  done(null, user);
+});
+```

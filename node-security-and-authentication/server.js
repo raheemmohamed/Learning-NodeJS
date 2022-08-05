@@ -4,6 +4,8 @@ const express = require("express");
 const path = require("path");
 const helmet = require("helmet");
 
+const cookieSession = require("cookie-session");
+
 // we dont need to assign in to constant
 require("dotenv").config({ path: "./environment/.env" });
 
@@ -18,6 +20,8 @@ const PORT = 3000;
 const config = {
   GOOGLE_CLIENT_ID: process.env.CLIENT_ID, // this is coming from environment/.env and its google clientID
   GOOGLE_CLIENT_SECRET: process.env.CLIENT_SECRET, // this is coming from environment/.env and its google CLIENT_SECRET
+  SECRET_KEY1: process.env.SECRET_KEY1,
+  SECRET_KEY2: process.env.SECRET_KEY2,
 };
 console.log("Auth Config", config);
 
@@ -32,7 +36,7 @@ console.log("AUTH Options", AUTH_OPTIONS);
 function verifyCallBack(accessToken, refreshToken, profile, done) {
   console.log("profile", profile);
   // first param for error and second for success
-  done(null, profile);
+  done(null, profile.id);
 }
 
 //passport use google strategy
@@ -40,8 +44,28 @@ passport.use(new GoogleStrategy(AUTH_OPTIONS, verifyCallBack));
 
 app.use(helmet());
 
+app.use(
+  cookieSession({
+    name: "node-api-session",
+    // Cookie Options
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    keys: [config.SECRET_KEY1, config.SECRET_KEY2],
+  })
+);
+
 // initialize passport middlware
 app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function (user, done) {
+  console.log("Check passport serializeUser", user);
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+  console.log("Check passport DeserializeUser", user);
+  done(null, user);
+});
 
 /**
  * ===================================================
@@ -51,7 +75,7 @@ app.use(passport.initialize());
 
 // function will check whether user logged
 function checkedLoggedIn(req, res, next) {
-  const isLogged = true;
+  const isLogged = req.isAuthenticated() && req.user;
   if (!isLogged) {
     return res.status(401).json({
       error: "You must log in!",
@@ -75,14 +99,17 @@ app.get(
   passport.authenticate("google", {
     failureRedirect: "/failure",
     successRedirect: "/",
-    session: false,
+    session: true,
   }),
   (req, res) => {
     console.log("Google Called us back");
   }
 );
 
-app.get("/auth/logout", (req, res) => {});
+app.get("/auth/logout", (req, res) => {
+  req.logOut();
+  res.redirect("/");
+});
 
 /**
  * ===================================================
